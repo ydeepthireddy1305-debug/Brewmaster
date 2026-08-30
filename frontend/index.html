@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brewmaster</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo">☕ Brewmaster</div>
+    <div class="loc">📍 Hyderabad <span>Deepthi's Cafe</span></div>
+    <div class="right">
+      <span onclick="openSearch()">🔍 Search</span> |
+      <span onclick="openCart()">🛒 <b id="cartCount">0</b> Cart</span>
+    </div>
+  </div>
+  <div id="searchBox" style="display:none;padding:10px 30px;background:white;">
+    <input id="searchInput" placeholder="Search Latte, Espresso..." oninput="doSearch(this.value)">
+  </div>
+</header>
+
+<div id="envBanner">🌧️ Cloudy 29°C Hyderabad — Kadalalle + Coffee = Perfect!</div>
+
+<audio id="brewMusic" onended="nextSong()"></audio>
+<div id="musicPlayer">
+  <div style="font-size:11px;">BREWMASTER RADIO</div>
+  <b id="songName">Kadalalle - Dear Comrade</b>
+  <div class="controls">
+    <button onclick="prevSong()">⏮️</button>
+    <button id="playPauseBtn" onclick="toggleMusic()">▶️ Play</button>
+    <button onclick="nextSong()">⏭️</button>
+  </div>
+  <input type="file" id="picker" accept="audio/*" onchange="pickFile(this)" style="width:100%;margin-top:6px;font-size:10px;">
+  <div style="font-size:9px;">↑ Choose Kadalalle MP3 to play your song</div>
+</div>
+
+<div id="cartDrawer">
+  <div style="padding:20px;">
+    <h3>Your Cart <span onclick="closeCart()" style="float:right;cursor:pointer;">✖</span></h3>
+    <input id="cname" placeholder="Your Name Deepthi">
+    <div id="cartItems" style="margin:15px 0;background:#f8f8f8;padding:10px;border-radius:8px;">No items — Click ADD!</div>
+    <b>Total: ₹<span id="total">0</span></b>
+    <button onclick="placeOrder()" style="background:#fc8019;color:white;width:100%;padding:12px;border:none;border-radius:8px;margin-top:10px;font-weight:800;">Place Order</button>
+    <p id="msg"></p>
+    <h4>Live Orders</h4>
+    <div id="orders"></div>
+  </div>
+</div>
+<div id="overlay" onclick="closeCart()" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0005;z-index:150;"></div>
+
+<div class="hero"><div><h1>Coffee in 5 Mins!</h1><p>Kadalalle playing + Rain message</p></div><div style="font-size:60px;">☕</div></div>
+
+<div class="categories">
+  <button class="cat active" onclick="filterCat('all')">All</button>
+  <button class="cat" onclick="filterCat('espresso')">Espresso</button>
+  <button class="cat" onclick="filterCat('latte')">Latte</button>
+  <button class="cat" onclick="filterCat('cold')">Cold</button>
+</div>
+
+<div class="main">
+  <div class="menu" id="menu"></div>
+</div>
+<script src="script.js"></script>
+</body>
+</html>

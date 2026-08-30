@@ -1,0 +1,20 @@
+body{margin:0;font-family:sans-serif;background:#f8f8f8}
+.nav{display:flex;justify-content:space-between;padding:15px 20px;background:white;align-items:center}
+.logo{font-weight:900;color:#fc8019;font-size:20px}
+.right{font-weight:700;cursor:pointer}
+#envBanner{background:#FFF3CD;text-align:center;padding:10px;font-weight:700;font-size:13px}
+#musicPlayer{position:fixed;bottom:15px;right:15px;background:#171a29;color:white;padding:12px;border-radius:12px;z-index:99;width:210px;text-align:center}
+.controls button{border:none;padding:5px 10px;border-radius:15px;margin:3px;cursor:pointer;font-weight:700}
+#cartDrawer{display:none;position:fixed;right:0;top:0;width:350px;max-width:85%;height:100%;background:white;z-index:200;overflow:auto;box-shadow:-5px 0 20px #0003}
+.hero{background:#282c3f;color:white;display:flex;justify-content:space-between;padding:25px 20px}
+.categories{display:flex;gap:8px;padding:12px 20px;background:white;overflow:auto}
+.cat{padding:6px 14px;border-radius:20px;border:1px solid #ddd;background:white;cursor:pointer}
+.cat.active{background:#282c3f;color:white}
+.main{padding:20px}
+.menu{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
+.card{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px #0001}
+.card.img{height:110px;background:#ffe9c9;display:flex;align-items:center;justify-content:center;font-size:40px}
+.info{padding:10px}
+.price{display:flex;justify-content:space-between;margin-top:8px;align-items:center}
+.add{border:1px solid #60b246;color:#60b246;background:white;padding:5px 12px;border-radius:5px;font-weight:700;cursor:pointer}
+.add.added{background:#60b246;color:white}
