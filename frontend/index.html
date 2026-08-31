@@ -1,67 +1,489 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Brewmaster</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BrewMaster | Smart Coffee Ordering</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<header>
-  <div class="nav">
-    <div class="logo">☕ Brewmaster</div>
-    <div class="loc">📍 Hyderabad <span>Deepthi's Cafe</span></div>
-    <div class="right">
-      <span onclick="openSearch()">🔍 Search</span> |
-      <span onclick="openCart()">🛒 <b id="cartCount">0</b> Cart</span>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="logo">
+        <div class="logo-icon">☕</div>
+        <span>BrewMaster</span>
     </div>
-  </div>
-  <div id="searchBox" style="display:none;padding:10px 30px;background:white;">
-    <input id="searchInput" placeholder="Search Latte, Espresso..." oninput="doSearch(this.value)">
-  </div>
+
+    <div class="location">
+        📍 Hyderabad • Deepthi's Cafe
+    </div>
+
+    <div class="nav-right">
+
+        <button class="top-btn" onclick="toggleSearch()">
+            🔍 Search
+        </button>
+
+        <button class="top-btn cart" onclick="openCart()">
+            🛒 <b id="cartCount">0</b> Cart
+        </button>
+
+    </div>
+
 </header>
 
-<div id="envBanner">🌧️ Cloudy 29°C Hyderabad — Kadalalle + Coffee = Perfect!</div>
 
-<audio id="brewMusic" onended="nextSong()"></audio>
-<div id="musicPlayer">
-  <div style="font-size:11px;">BREWMASTER RADIO</div>
-  <b id="songName">Kadalalle - Dear Comrade</b>
-  <div class="controls">
-    <button onclick="prevSong()">⏮️</button>
-    <button id="playPauseBtn" onclick="toggleMusic()">▶️ Play</button>
-    <button onclick="nextSong()">⏭️</button>
-  </div>
-  <input type="file" id="picker" accept="audio/*" onchange="pickFile(this)" style="width:100%;margin-top:6px;font-size:10px;">
-  <div style="font-size:9px;">↑ Choose Kadalalle MP3 to play your song</div>
+<!-- ================= SEARCH ================= -->
+
+<div id="searchBox">
+
+    <input
+        id="sInput"
+        type="text"
+        placeholder="Search Espresso, Latte, Cold Brew..."
+        oninput="doSearch(this.value)"
+    >
+
 </div>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-left">
+
+        <span class="hero-tag">
+            ☕ SMART COFFEE ORDERING
+        </span>
+
+        <h1>
+            Your Coffee.<br>
+            Your Ingredients.<br>
+            Your Way.
+        </h1>
+
+        <p id="envBanner">
+            Cloudy 29°C Hyderabad — Perfect coffee weather!
+        </p>
+
+        <button class="hero-btn" onclick="scrollToMenu()">
+            Explore Menu →
+        </button>
+
+    </div>
+
+    <div class="hero-right">
+
+        <div class="hero-coffee">
+            ☕
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CATEGORY FILTERS ================= -->
+
+<div class="filters">
+
+    <button
+        class="pill active"
+        onclick="filterCat('all', this)"
+    >
+        All
+    </button>
+
+    <button
+        class="pill"
+        onclick="filterCat('espresso', this)"
+    >
+        ☕ Espresso
+    </button>
+
+    <button
+        class="pill"
+        onclick="filterCat('latte', this)"
+    >
+        🥛 Latte
+    </button>
+
+    <button
+        class="pill"
+        onclick="filterCat('cold', this)"
+    >
+        🧊 Cold
+    </button>
+
+</div>
+
+
+<!-- ================= MENU ================= -->
+
+<main>
+
+    <h2 class="section-title">
+        Choose Your Coffee
+    </h2>
+
+    <p class="section-subtitle">
+        Select a coffee and customize it with your favorite ingredients.
+    </p>
+
+    <div
+        class="menu"
+        id="menu"
+    ></div>
+
+</main>
+
+
+<!-- ================= CUSTOMIZATION MODAL ================= -->
+
+<div id="customModal" class="modal">
+
+    <div class="custom-box">
+
+        <button
+            class="close-btn"
+            onclick="closeCustomization()"
+        >
+            ✖
+        </button>
+
+        <img
+            id="customImg"
+            src=""
+            alt="Coffee"
+        >
+
+        <h2 id="customName">
+            Coffee
+        </h2>
+
+        <p class="base-price">
+            Base Price:
+            ₹<span id="customBasePrice">0</span>
+        </p>
+
+
+        <!-- INGREDIENTS -->
+
+        <h3>
+            🥛 Choose Ingredients
+        </h3>
+
+        <label class="ingredient">
+
+            <span>
+                <input
+                    type="checkbox"
+                    value="20"
+                    data-name="Milk"
+                    onchange="updateCustomTotal()"
+                >
+
+                Milk
+            </span>
+
+            <b>+₹20</b>
+
+        </label>
+
+
+        <label class="ingredient">
+
+            <span>
+                <input
+                    type="checkbox"
+                    value="30"
+                    data-name="Extra Coffee"
+                    onchange="updateCustomTotal()"
+                >
+
+                Extra Coffee
+            </span>
+
+            <b>+₹30</b>
+
+        </label>
+
+
+        <label class="ingredient">
+
+            <span>
+                <input
+                    type="checkbox"
+                    value="10"
+                    data-name="Sugar"
+                    onchange="updateCustomTotal()"
+                >
+
+                Sugar
+            </span>
+
+            <b>+₹10</b>
+
+        </label>
+
+
+        <label class="ingredient">
+
+            <span>
+                <input
+                    type="checkbox"
+                    value="25"
+                    data-name="Chocolate"
+                    onchange="updateCustomTotal()"
+                >
+
+                Chocolate
+            </span>
+
+            <b>+₹25</b>
+
+        </label>
+
+
+        <label class="ingredient">
+
+            <span>
+                <input
+                    type="checkbox"
+                    value="10"
+                    data-name="Ice"
+                    onchange="updateCustomTotal()"
+                >
+
+                Ice
+            </span>
+
+            <b>+₹10</b>
+
+        </label>
+
+
+        <!-- TEMPERATURE -->
+
+        <h3>
+            🌡️ Temperature
+        </h3>
+
+        <div class="temperature-options">
+
+            <label>
+                <input
+                    type="radio"
+                    name="temperature"
+                    value="Hot"
+                    checked
+                >
+                🔥 Hot
+            </label>
+
+            <label>
+                <input
+                    type="radio"
+                    name="temperature"
+                    value="Warm"
+                >
+                ☕ Warm
+            </label>
+
+            <label>
+                <input
+                    type="radio"
+                    name="temperature"
+                    value="Cold"
+                >
+                🧊 Cold
+            </label>
+
+        </div>
+
+
+        <!-- INSTRUCTIONS -->
+
+        <h3>
+            📝 Preparation Instructions
+        </h3>
+
+        <textarea
+            id="instructions"
+            placeholder="Example: Less sugar, extra hot, strong coffee..."
+        ></textarea>
+
+
+        <!-- TOTAL -->
+
+        <div class="custom-total">
+
+            Total:
+            ₹<span id="customTotal">0</span>
+
+        </div>
+
+
+        <button
+            class="confirm-btn"
+            onclick="confirmCustomization()"
+        >
+            🛒 Add to Cart
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MUSIC PLAYER ================= -->
+
+<audio
+    id="aud"
+    onended="nextSong()"
+></audio>
+
+<div id="musicPlayer">
+
+    <div class="mp-title">
+        BREWMASTER RADIO 📻
+    </div>
+
+    <b id="songName">
+        Kadalalle - Dear Comrade
+    </b>
+
+    <div class="mp-sub">
+        Now Playing • Cafe Music
+    </div>
+
+    <div class="mp-controls">
+
+        <button
+            class="mp-play"
+            id="playBtn"
+            onclick="toggleMusic()"
+        >
+            ▶
+        </button>
+
+        <button
+            class="mp-skip"
+            onclick="prevSong()"
+        >
+            ⏮
+        </button>
+
+        <div
+            class="wave"
+            id="wave"
+        ></div>
+
+        <button
+            class="mp-skip"
+            onclick="nextSong()"
+        >
+            ⏭
+        </button>
+
+    </div>
+
+    <div class="mp-live">
+        Live • Cafe Radio
+    </div>
+
+</div>
+
+
+<!-- ================= CART DRAWER ================= -->
 
 <div id="cartDrawer">
-  <div style="padding:20px;">
-    <h3>Your Cart <span onclick="closeCart()" style="float:right;cursor:pointer;">✖</span></h3>
-    <input id="cname" placeholder="Your Name Deepthi">
-    <div id="cartItems" style="margin:15px 0;background:#f8f8f8;padding:10px;border-radius:8px;">No items — Click ADD!</div>
-    <b>Total: ₹<span id="total">0</span></b>
-    <button onclick="placeOrder()" style="background:#fc8019;color:white;width:100%;padding:12px;border:none;border-radius:8px;margin-top:10px;font-weight:800;">Place Order</button>
-    <p id="msg"></p>
-    <h4>Live Orders</h4>
-    <div id="orders"></div>
-  </div>
-</div>
-<div id="overlay" onclick="closeCart()" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0005;z-index:150;"></div>
 
-<div class="hero"><div><h1>Coffee in 5 Mins!</h1><p>Kadalalle playing + Rain message</p></div><div style="font-size:60px;">☕</div></div>
+    <div class="cart-content">
 
-<div class="categories">
-  <button class="cat active" onclick="filterCat('all')">All</button>
-  <button class="cat" onclick="filterCat('espresso')">Espresso</button>
-  <button class="cat" onclick="filterCat('latte')">Latte</button>
-  <button class="cat" onclick="filterCat('cold')">Cold</button>
+        <div class="cart-header">
+
+            <h2>
+                🛒 Your Cart
+            </h2>
+
+            <span
+                onclick="closeCart()"
+                class="cart-close"
+            >
+                ✖
+            </span>
+
+        </div>
+
+
+        <input
+            id="cname"
+            type="text"
+            placeholder="Enter your name"
+        >
+
+
+        <div id="cartItems">
+
+            No items — Click ADD +
+
+        </div>
+
+
+        <div class="cart-total">
+
+            Total:
+            ₹<span id="total">0</span>
+
+        </div>
+
+
+        <button
+            class="orderBtn"
+            onclick="placeOrder()"
+        >
+            Place Order
+        </button>
+
+
+        <p id="msg"></p>
+
+
+        <h3>
+            📦 Recent Orders
+        </h3>
+
+        <div id="orders"></div>
+
+    </div>
+
 </div>
 
-<div class="main">
-  <div class="menu" id="menu"></div>
-</div>
+
+<!-- OVERLAY -->
+
+<div
+    id="overlay"
+    onclick="closeCart()"
+></div>
+
+
 <script src="script.js"></script>
+
 </body>
+
 </html>
